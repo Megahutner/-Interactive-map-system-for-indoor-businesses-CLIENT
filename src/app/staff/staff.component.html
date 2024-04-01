@@ -1,0 +1,97 @@
+<div class ="header">
+    Staff
+</div>
+
+<div class="col-md-12" style ="margin-top: 50px;">
+ 
+  <div fxLayout="row" fxLayoutAlign ="end">
+    <button mat-raised-button (click)="openCreate()">Create</button> 
+    
+  </div>
+    <table mat-table [dataSource]="staffs" class="mat-elevation-z8" style = "margin-top: 5px;">
+
+     
+        <ng-container matColumnDef="Id">
+          <th mat-header-cell *matHeaderCellDef>  Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="Email">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Delete">
+          <th mat-header-cell *matHeaderCellDef>  </th>
+          <td mat-cell *matCellDef="let element"> 
+            <button mat-icon-button (click)="deleteStaff(element.id)">
+               <mat-icon>close</mat-icon>
+            </button>
+        </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="staffColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: staffColumns;"></tr>
+      </table>
+</div>
+
+<ng-template #form>
+  <h2 mat-dialog-title fxLayoutAlign="center">Create</h2>
+  <mat-card-content style ='padding:10px'>
+    <form>
+      <table>
+      <tr>
+        <td >Name</td>
+        <td>
+          <mat-form-field class="inputBackground">
+            <input matInput class="inputField" type="text" name="name"[(ngModel)]="user.name">
+          </mat-form-field>
+        </td>
+        </tr>
+
+        <tr>
+          <td >Password</td>
+          <td>
+          <mat-form-field class="inputBackground">
+            <input matInput class="inputField" type="password" name="password"[(ngModel)]="user.password">
+          </mat-form-field>
+        </td>
+        </tr>
+
+        <tr>
+          <td >Email</td>
+          <td>
+          <mat-form-field class="inputBackground">
+            <input matInput class="inputField" type="text" name="email"[(ngModel)]="user.email">
+          </mat-form-field>
+        </td>
+        </tr>
+
+        <tr>
+          <td >Type</td>
+          <td>
+          <mat-card-content>
+            <mat-form-field>
+              <mat-select [(value)]="user.type">
+                @for (state of roles; track state) {
+                  <mat-option [value]="state.id">{{state.name}}</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+          </mat-card-content>
+        </td>
+        </tr>
+      </table>
+      </form>
+
+      <div fxLayout="row" fxLayoutAlign ="space-around center">
+        <button mat-raised-button (click)="create()">Create</button> 
+        <button mat-raised-button (click)="clearData()">Clear data</button> 
+      </div>
+  </mat-card-content> 
+</ng-template>

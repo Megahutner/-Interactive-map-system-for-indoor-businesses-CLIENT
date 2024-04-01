@@ -1,0 +1,63 @@
+<div class ="header">
+    Category
+</div>
+
+<div class="col-md-12" style ="margin-top: 50px;">
+  <div fxLayout="row" fxLayoutAlign ="end">
+    <button mat-raised-button (click)="openCreate()">Create</button> 
+    </div>
+    <table mat-table [dataSource]="categories" class="mat-elevation-z8" style = "margin-top: 5px;">
+
+        <ng-container matColumnDef="Id">
+          <th mat-header-cell *matHeaderCellDef>  Id </th>
+          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+      
+        <ng-container matColumnDef="Des">
+          <th mat-header-cell *matHeaderCellDef> Description </th>
+          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="categoryColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: categoryColumns;"></tr>
+      </table>
+</div>
+
+
+<ng-template #form>
+  <h2 mat-dialog-title fxLayoutAlign="center">Create</h2>
+  <mat-card-content style ='padding:10px'>
+    <form>
+      <table>
+      <tr>
+        <td >Name</td>
+        <td>
+          <mat-form-field class="inputBackground">
+            <input matInput class="inputField" type="text" name="name"[(ngModel)]="category.name">
+          </mat-form-field>
+        </td>
+        </tr>
+
+        <tr>
+          <td >Description</td>
+          <td>
+          <mat-form-field class="inputBackground">
+            <input matInput class="inputField" type="text" name="password"[(ngModel)]="category.description">
+          </mat-form-field>
+        </td>
+        </tr>
+
+        </table>
+      </form>
+
+      <div fxLayout="row" fxLayoutAlign ="space-around center">
+        <button mat-raised-button (click)="create()">Create</button> 
+        <button mat-raised-button (click)="clearData()">Clear data</button> 
+      </div>
+  </mat-card-content> 
+</ng-template>

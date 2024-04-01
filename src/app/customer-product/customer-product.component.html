@@ -1,0 +1,46 @@
+<div class="header">
+    <p (click) ="getCategory(0)" class="logo">Clothes E-Commerce </p>
+    <a (click)="getCategory(1)" class="category">Accessories </a>
+    <a (click)="getCategory(2)" class="category">Outerwear </a>
+    <a (click)="getCategory(3)" class="category">Top </a>
+    <a (click)="getCategory(4)" class="category">Bottom </a>
+    <a (click)="getCategory(5)" class="category">Shoes </a>
+
+
+    <div class="header-right" *ngIf = 'loggedIn'>
+      <a href="/cart"><i class="fas fa-cart-shopping" style="font-size:30px;"></i></a>
+      <a href="/profile">{{currentCustomer?.name}}</a>
+      <a (click)="logout()" class ='category'>Log out</a>
+    </div>
+
+    <div class="header-right" *ngIf = '!loggedIn'>
+      <a href="/customer-login">Login</a>
+    </div>
+
+  </div>
+  <div class = container style ="margin-top: 30px;">
+    <div class ="headerTitle">
+        {{currentCategory}}
+    </div>
+    
+    <div class="product-list-container" *ngIf ='productList'>
+        <div class="product-container" *ngFor="let product of productList">
+                <img [src]="global.imageLink(product.image)">
+                <h3 class="product-container-title">{{product.name}}</h3>
+                <p class="product-container-description">{{product.description? product.description : "No description"}}</p>
+                <p class="product-container-price">${{product.price}}</p>
+                <div class ="product-container-button">
+                <button mat-raised-button [disabled] = ' addingProduct == product.id' (click) = "addToCart(product.id)" *ngIf= 'product.available > 0'> 
+                  <div *ngIf =" addingProduct != product.id" >Add to cart</div> 
+                  <mat-spinner *ngIf = "addingProduct == product.id" diameter="20"></mat-spinner>
+                </button>
+                <button mat-raised-button disabled  *ngIf= 'product.available <= 0'> Out of stock </button>
+
+                </div>
+        </div>    
+  </div>
+
+  <div class ='empty' *ngIf ='productList === null || productList?.length == 0'>
+    This category is currently empty!
+  </div>
+  

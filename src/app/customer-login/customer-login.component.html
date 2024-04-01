@@ -1,0 +1,57 @@
+<body>
+    <section>
+        <div class="form-box" *ngIf="loginMode">
+            <div class="form-value">
+                <form action="">
+                    <h2>Login</h2>
+                    <div class="inputbox">
+                        <input type="text" name="name"[(ngModel)]="model.name" required>
+                        <label for="">Name</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="password" name="password"[(ngModel)]="model.password" required>
+                        <label for="">Password</label>
+                    </div>
+                    <button (click)="login()">Log in</button>
+                    <div class="register">
+                        <p>Don't have a account <a href="/customer-register">Register</a></p>
+                    </div>
+                    <div class="register">
+                        <p>Forget your password <a (click)="toForgotPassword()">Forgot password</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="form-box" *ngIf ='sendResetMode '>
+            <div class="form-value">
+                <form action="">
+                    <h2>Forgot Password</h2>
+                    <div class="inputbox">
+                        <input type="text" name="email"[(ngModel)]="email">
+                        <label for="">Email</label>
+                    </div>
+                    <button (click)="sendReset()">Send</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="form-box" *ngIf ='verifyMode'>
+            <div class="form-value">
+                <form action="">
+                    <h2>PIN sent to email!</h2>
+                    <div class="inputbox">
+                        <input type="text" name="code"[(ngModel)]="code">
+                        <label for="">PIN code</label>
+                    </div>
+
+                    <div class="inputbox">
+                        <input type="password" name="password"[(ngModel)]="password">
+                        <label for="">New Password</label>
+                    </div>
+                   
+                    <button (click)="resetPass()">Verify</button>
+                </form>
+            </div>
+        </div>
+    </section>
+</body>

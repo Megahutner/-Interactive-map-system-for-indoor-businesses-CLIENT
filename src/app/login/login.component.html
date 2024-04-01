@@ -1,0 +1,64 @@
+<!-- <div class = "main-container">
+    <div class ="content">
+        <div class = "image-container">
+            <img src ="https://colorlib.com/etc/lf/Login_v1/images/img-01.png">
+        </div>
+        <div class ="login-container">
+            <span class="title">Login</span>
+            <div class="input-icons">
+                <i class="fa fa-user icon" >
+                </i>
+                <input class="input-field"
+                       type="text"
+                       placeholder="Username"
+                       name="password" [(ngModel)]="model.username" >
+            </div>
+            <div class="input-icons">
+                <i class="fa fa-key icon">
+                </i>
+                <input class="input-field"
+                       type="password"
+                       placeholder="Enter Password"
+                       name="password" [(ngModel)]="model.password">
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<!-- <ng-container *ngIf="!IsUser">
+    <router-outlet></router-outlet>
+</ng-container>
+
+<ng-template>
+
+</ng-template> -->
+
+<body>
+    <section>
+        <div class="form-box">
+            <div class="form-value">
+                <form action="">
+                    <h2>Login</h2>
+                    <div class="inputbox">
+                        <input type="text" name="name"[(ngModel)]="model.name" required>
+                        <label for="">Name</label>
+                    </div>
+                    <div class="inputbox">
+                        <input type="password" name="password"[(ngModel)]="model.password" required>
+                        <label for="">Password</label>
+                    </div>
+                    <!-- <div class="forget">
+                        <label for=""><input type="checkbox">Remember Me </label>
+                        <label><a href="#">Forget Password</a></label>
+                      
+                    </div> -->
+                    <button (click)="login()">Log in</button>
+                    <!-- <div class="register">
+                        <p>Don't have a account <a href="#">Register</a></p>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </section>
+</body>
