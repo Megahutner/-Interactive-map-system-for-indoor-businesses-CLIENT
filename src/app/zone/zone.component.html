@@ -1,21 +1,21 @@
 <div class ="header">
-    Category
+    Zone
 </div>
 
 <div class="col-md-12" style ="margin-top: 50px;">
   <div fxLayout="row" fxLayoutAlign ="end">
     <button mat-raised-button (click)="openCreate()"><mat-icon style="height:30px;width:30px ;font-size:30px;">library_add</mat-icon >Create</button> 
     </div>
-    <table mat-table [dataSource]="categories" class="mat-elevation-z8" style = "margin-top: 5px;">
-
-        <!-- <ng-container matColumnDef="Id">
-          <th mat-header-cell *matHeaderCellDef>  Id </th>
-          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-        </ng-container> -->
+    <table mat-table [dataSource]="zones" class="mat-elevation-z8" style = "margin-top: 5px;">
       
         <ng-container matColumnDef="Name">
           <th mat-header-cell *matHeaderCellDef> Name </th>
           <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ZoneId">
+          <th mat-header-cell *matHeaderCellDef> Zone ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.zoneID}} </td>
         </ng-container>
       
         <ng-container matColumnDef="CreatedTime">
@@ -28,17 +28,26 @@
           <td mat-cell *matCellDef="let element"> {{global.FormatDatetimeShow(element.updatedTime)}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="Edit">
+          <th mat-header-cell *matHeaderCellDef>  </th>
+          <td mat-cell *matCellDef="let element"> 
+            <button mat-icon-button (click)="drawZone(element.id)">
+               <mat-icon>edit</mat-icon>
+            </button>
+        </td>
+        </ng-container>
+
         <ng-container matColumnDef="Delete">
           <th mat-header-cell *matHeaderCellDef>  </th>
           <td mat-cell *matCellDef="let element"> 
-            <button mat-icon-button (click)="deleteCategory(element.id)">
+            <button mat-icon-button (click)="deleteZone(element.id)">
                <mat-icon>delete</mat-icon>
             </button>
         </td>
         </ng-container>
       
-        <tr mat-header-row *matHeaderRowDef="categoryColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: categoryColumns;"></tr>
+        <tr mat-header-row *matHeaderRowDef="zoneColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: zoneColumns;"></tr>
       </table>
 </div>
 
@@ -51,24 +60,28 @@
       <tr>
         <td >Name</td>
         <td style=" padding: 10px;">
-            <input  class="inputField" type="text" name="name"[(ngModel)]="category.name">
+            <input class="inputField" type="text" name="name"[(ngModel)]="zone.name">
         </td>
         </tr>
 
-        <!-- <tr>
-          <td >Description</td>
-          <td>
-          <mat-form-field class="inputBackground">
-            <input matInput class="inputField" type="text" name="password"[(ngModel)]="category.description">
-          </mat-form-field>
-        </td>
-        </tr> -->
+        <tr>
+          <td >Width</td>
+          <td style=" padding: 10px;">
+        <input  class="inputField" type="number" name="available"[(ngModel)]="zone.width">
+      </td>
+      </tr>
 
+      <tr>
+        <td >Height</td>
+        <td style=" padding: 10px;">
+      <input  class="inputField" type="number" name="available"[(ngModel)]="zone.height">
+    </td>
+    </tr>
         </table>
       </form>
 
       <div fxLayout="row" fxLayoutAlign ="space-around center">
-        <button mat-raised-button (click)="create()">Create</button> 
+        <button mat-raised-button (click)="createOrEdit()">Create</button> 
         <button mat-raised-button (click)="clearData()">Clear data</button> 
       </div>
   </mat-card-content> 

@@ -1,317 +1,253 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
-import {AuthService} from './auth.service'
-import { GlobalService } from './global.service';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { GlobalService } from "./global.service";
+import { sort_model } from "../../model/sort-model";
+import { pagging_model } from "../../model/pagging-model";
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-
 @Injectable()
 export class ApiService {
   public token: string;
-  public url: string;
+  // public url: string = "http://54.255.241.14:8085/
+  public urlBridgeService: string;
+  private url: string;
+  private url_image: string;
 
-  GetHeader(): any{
+
+  GetHeader(): any {
     var httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache',
-        'X-PINGOTHER': 'pingpong',
-        'Authorization': "Bearer " + this.token,
-      })
+        "Content-Type": "application/json",
+        "Cache-Control": "no-cache",
+        "X-PINGOTHER": "pingpong"
+      }),
     };
     return httpOptions;
   }
-  constructor(private http: HttpClient, private router: Router, private auth: AuthService, private global: GlobalService) { 
-    // this.url = global.serverUrl;
-    this.global.getConfig().subscribe(data => {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private global: GlobalService,
+  ) {
+    this.getConfig().subscribe(data => {
       this.url = data.serverApi;
+      this.url_image = data.imagePrefix
      });
+    
   }
 
-  private  getConfig(): Observable<any>  {
-    return this.http.get("../../../assets/config.txt");
-  }
-
-  async getUrl(): Promise<any> {
-    return await this.getConfig().toPromise()
-    .then(res => {
-        this.url = res.serverApi;
-        return res;
-      });
-  }
-
-  async GetWithBody(api: string, body: any): Promise<any> {
-    this.checkAuthen();
-    if(this.url === null || this.url === undefined){
-      return await this.getUrl().then(res => {
-        return this.http.get<any>(this.url + api, body).toPromise().then(data => {
-          return data;
-        });
-      });      
-    }
-    else{
-      return await this.http.get<any>(this.url + api, this.GetHeader()).toPromise().then(res => {
-        return res;
-      });
-    }   
-  }
-
-  async Get(api: string): Promise<any> {
-    this.checkAuthen();
-    if(this.url === null || this.url === undefined){
-      return await this.getUrl().then(res => {
-        return this.http.get<any>(this.url + api, this.GetHeader()).toPromise().then(data => {
-          return data;
-        });
-      });      
-    }
-    else{
-      return await this.http.get<any>(this.url + api, this.GetHeader()).toPromise().then(res => {
-        return res;
-      });
-    }   
-  }
-
-  async unauthorizedGet(api: string): Promise<any> {
-    if(this.url === null || this.url === undefined){
-      return await this.getUrl().then(res => {
-        return this.http.get<any>(this.url + api).toPromise().then(data => {
-          return data;
-        });
-      });      
-    }
-    else{
-      return await this.http.get<any>(this.url + api).toPromise().then(res => {
-        return res;
-      });
-    }   
-  }
-
-  async Post(api: string, json?: any): Promise<any> {
-    this.checkAuthen();
-    if(this.url === null || this.url === undefined){
-      return await this.getUrl().then(res => {
-        return this.http.post<any>(this.url + api, json, this.GetHeader()).toPromise().then(data => {
-          return data;
-        });
-      });      
-    }
-    else{
-      return await this.http.post<any>(this.url + api, json, this.GetHeader()).toPromise().then(res => {
-        return res;
-      });
-    }
-  }
-  async PostUploadFile(api: string, formdata: any): Promise<any> {
-    var httpOptions = {
-      headers: new HttpHeaders({
-        'enctype': "multipart/form-data",
-        'Accept': 'text/plain',
-        'Cache-Control': 'no-cache',
-        'X-PINGOTHER': 'pingpong',
-        'Authorization': "Bearer " + this.token,
-      })
-    };
-    if(this.url === null || this.url === undefined){
-      return await this.getUrl().then(res => {
-        return this.http.post<any>(this.url + api, formdata, httpOptions).toPromise().then(data => {
-          return data;
-        });
-      });      
-    }
-    else{
-      return await this.http.post<any>(this.url + api, formdata, httpOptions).toPromise().then(res => {
-        return res;
-      });
-    }
-  }
-
-  async unauthorizedPost(api: string, json?: any): Promise<any> {
-    if(this.url === null || this.url === undefined){
-      return await this.getUrl().then(res => {
-        return this.http.post<any>(this.url + api, json).toPromise().then(data => {
-          return data;
-        });
-      });      
-    }
-    else{
-      return await this.http.post<any>(this.url + api, json).toPromise().then(res => {
-        return res;
-      });
-    }
-  }
-
-  async Put(api: string, json?: any): Promise<any> {
-    this.checkAuthen();
-    if(this.url === null || this.url === undefined){
-      return await this.getUrl().then(res => {
-        return this.http.put<any>(this.url + api, json, this.GetHeader()).toPromise().then(data => {
-          return data;
-        });
-      });      
-    }
-    else{
-      return await this.http.put<any>(this.url + api, json, this.GetHeader()).toPromise().then(res => {
-        return res;
-      });
-    }
-  }
-
-  async Delete(api: string): Promise<any> {
-    this.checkAuthen();
-    if(this.url === null || this.url === undefined){
-      return await this.getUrl().then(res => {
-        return this.http.delete<any>(this.url + api, this.GetHeader()).toPromise().then(data => {
-          return data;
-        });
-      });      
-    }
-    else{
-      return await this.http.delete<any>(this.url + api, this.GetHeader()).toPromise().then(res => {
-        return res;
-      });
-    }
-  }
-
+  
   error(err) {
     if ( err.code = null) {
       //this.auth.logoutUser();
     }
   }
 
-  checkAuthen(){
-    this.token = localStorage.getItem("user_token")!;
-    if (this.token === "" || this.token === null || this.token === undefined) {
-      this.auth.logout();
+  private getConfig(): Observable<any> {
+    return this.http.get("../../../assets/config.txt");
+  }
+
+  async getUrl(): Promise<any> {
+    return await this.getConfig()
+      .toPromise()
+      .then((res) => {
+        this.url = res.serverApi;
+        this.url_image = res.serverImage;
+        this.urlBridgeService = res.bridgeServiceApi;
+        return res;
+      });
+  }
+
+  async GetWithBody(api: string, body: any): Promise<any> {
+    if (this.url === null || this.url === undefined) {
+      return await this.getUrl().then((res) => {
+        return this.http
+          .get<any>(this.url + api, body)
+          .toPromise()
+          .then((data) => {
+            return data;
+          });
+      });
+    } else {
+      return await this.http
+        .get<any>(this.url + api, this.GetHeader())
+        .toPromise()
+        .then((res) => {
+          return res;
+        });
     }
   }
 
-
-  // Dashboard APIs
-  GetGeneralInfo(){
-    return this.Get(`basic/general`);
-  }
-  GetLatestTransactions(){
-    return this.Get(`basic/latestTransactions`);
-  }
-
-  GetLatestCustomers(){
-    return this.Get(`basic/latestCustomers`);
-  }
-
-
-   // Basic APIs
-   GetEnumCategories(){
-    return this.Get(`basic/getEnumCategories`);
-  }
-  // Category APIs
-  GetCategories(){
-    return this.Get(`categories`);
+  async Get(api: string): Promise<any> {
+    if (this.url === null || this.url === undefined) {
+      return await this.getUrl().then((res) => {
+        return this.http
+          .get<any>(this.url + api, this.GetHeader())
+          .toPromise()
+          .then((data) => {
+            return data;
+          });
+      });
+    } else {
+      return await this.http
+        .get<any>(this.url + api, this.GetHeader())
+        .toPromise()
+        .then((res) => {
+          return res;
+        });
+    }
   }
 
-  CreateCategory(data){
-    return this.Post(`categories`,data);
+  async Post(api: string, json?: any): Promise<any> {
+    if (this.url === null || this.url === undefined) {
+      return await this.getUrl().then((res) => {
+        return this.http
+          .post<any>(this.url + api, json, this.GetHeader())
+          .toPromise()
+          .then((data) => {
+            return data;
+          });
+      });
+    } else {
+      return await this.http
+        .post<any>(this.url + api, json, this.GetHeader())
+        .toPromise()
+        .then((res) => {
+          return res;
+        });
+    }
   }
 
-
-  // Product APIs
-  GetProducts(){
-    return this.unauthorizedGet(`products`);
+  async Put(api: string, json?: any): Promise<any> {
+    if (this.url === null || this.url === undefined) {
+      return await this.getUrl().then((res) => {
+        return this.http
+          .put<any>(this.url + api, json, this.GetHeader())
+          .toPromise()
+          .then((data) => {
+            return data;
+          });
+      });
+    } else {
+      return await this.http
+        .put<any>(this.url + api, json, this.GetHeader())
+        .toPromise()
+        .then((res) => {
+          return res;
+        });
+    }
   }
 
-  GetCustomerProducts(data:string=''){
-    console.log(`products`+data);
-    return this.unauthorizedGet(`products`+data);
+  async Delete(api: string): Promise<any> {
+    if (this.url === null || this.url === undefined) {
+      return await this.getUrl().then((res) => {
+        return this.http
+          .delete<any>(this.url + api, this.GetHeader())
+          .toPromise()
+          .then((data) => {
+            return data;
+          });
+      });
+    } else {
+      return await this.http
+        .delete<any>(this.url + api, this.GetHeader())
+        .toPromise()
+        .then((res) => {
+          return res;
+        });
+    }
   }
 
-  CreateProduct(data){
-    return this.Post(`products`,data);
+  async PostUploadFile(api: string, formdata: any): Promise<any> {
+    var httpOptions = {
+      headers: new HttpHeaders({
+        enctype: "multipart/form-data",
+        Accept: "text/plain",
+        "Cache-Control": "no-cache",
+        "X-PINGOTHER": "pingpong",
+      }),
+    };
+    if (this.url === null || this.url === undefined) {
+      return await this.getUrl().then((res) => {
+        return this.http
+          .post<any>(this.url + api, formdata, httpOptions)
+          .toPromise()
+          .then((data) => {
+            return data;
+          });
+      });
+    } else {
+      return await this.http
+        .post<any>(this.url + api, formdata, httpOptions)
+        .toPromise()
+        .then((res) => {
+          return res;
+        });
+    }
   }
 
-  EditProduct(id,data){
-    return this.Put(`products/`+id,data);
+  UploadFile(formdata: any, type: any, cmsId: any = 0) {
+    //0: CMS
+    //1: system
+    if (type === 0)
+      return this.PostUploadFile(
+        `api/MediaInfo/upload-file?type=${type}&cmsId=${cmsId}`,
+        formdata
+      );
+    else
+      return this.PostUploadFile(
+        `api/MediaInfo/upload-file?type=${type}`,
+        formdata
+      );
   }
 
-  DeleteProduct(id){
-    return this.Delete(`products/`+id);
+ 
+  //Zone
+  CreateZone(data) {
+    return this.Post("zone/create", data);
   }
 
-  UploadFile(formdata: any){
-      return this.PostUploadFile(`products/uploadImage`, formdata);
+  GetZones() {
+    return this.Get("zone/get");
   }
 
-  // Transaction APIs
-  GetTransactions(){
-    return this.Get(`transactions`);
+  DeleteZone(id) {
+    return this.Delete(`zone/delete?id=${id}`);
   }
+  GetZoneDetails(id) {
+    return this.Get(`zone/get-zone-details?id=${id}`);
+  }
+  UpdateDrawZone(data) {
+    return this.Post(`zone/update-draw-zone`, data);
+  }
+  UploadBG(formdata: any, zoneid: any) {
+    return this.PostUploadFile(
+      `zone/update/background?id=${zoneid}`,
+      formdata
+    );
+  }
+  //End Zone/////////////////////////////////////////////////////////////////////
 
-  EndTransaction(data){
-    return this.Post(`transactions/endTransaction`,data);
-  }
 
+    // Category APIs
+    GetCategories(){
+     return this.Get("category/get");
+    }
+    GetCategoryEnum(){
+      return this.Get("category/enum");
+     }
+    CreateCategory(data) {
+      return this.Post("category/create", data);
+    }
+    DeleteCategory(id) {
+      return this.Delete(`category/delete?id=${id}`);
+    }
+    // End Category
 
-  // Customer APIs
-  GetCustomers(){
-    return this.Get(`customers`);
-  }
-
-  RegisterCustomer(data){
-    return this.unauthorizedPost(`customers`,data);
-  }
-
-  verifyPin(data){
-    return this.unauthorizedPost(`customers/verify`,data);
-  }
-
-  SendReset(data){
-    return this.unauthorizedPost(`customers/sendReset`,data);
-  }
-
-  ResetPassword(data){
-    return this.unauthorizedPost(`customers/reset`,data);
-  }
-
-  AddToCart(data){
-    return this.Post('transactions/addToCart',data);
-  }
-
-  GetCustomerCart(){
-    return this.Get('cart');
-  }
-
-  RemoveFromCart(data){
-    return this.Post('transactions/removeFromCart',data)
-  }
-
-  MakeTransaction(data){
-    return this.Post('transactions/makeTransaction',data)
-  }
-  GetCustomerTransactions(){
-    return this.Get("customerTransaction");
-  }
-
-  // Staff APIs
-  GetStaffs(){
-    return this.Get(`users`);
-  }
-
-  CreateStaff(data){
-    return this.Post(`users`,data);
-  }
-
-  EditStaff(id,data){
-    return this.Put(`users/`+id,data);
-  }
-
-  DeleteStaff(id){
-    return this.Delete(`users/`+id);
-  }
 }
-
 

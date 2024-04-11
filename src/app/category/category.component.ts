@@ -15,28 +15,27 @@ export class CategoryComponent {
 
   category: category_model;
   categories: any;
-  categoryColumns: string[] = [ 'Id', 'Name', 'Des'];
+  categoryColumns: string[] = [  'Name', "CreatedTime","UpdatedTime", "Delete"];
   
   constructor(
     private apiService: ApiService,
     public global: GlobalService,
-    private router: Router,
     private _snackBar: MatSnackBar,
     private dialog:MatDialog
   ) {
+  }
+  ngOnInit(): void {
     this.getCategories();
-    //this.getLatestTransactions();
   }
 
   @ViewChild('form', { static: true }) form: TemplateRef<any>;
 
 
   public getCategories(){
-    this.apiService
-    .GetCategories()
+    this.apiService.GetCategories()
     .then((res) => {
       console.log(res);
-      this.categories = res?.data;
+      this.categories = res?.data.category;
     })
     .catch((err) => {
       this.apiService.error(err);
@@ -44,18 +43,6 @@ export class CategoryComponent {
   }
 
   
-  public getLatestTransactions(){
-    this.apiService
-    .GetLatestTransactions()
-    .then((res) => {
-      console.log(res);
-      this.categories = res.data;
-    })
-    .catch((err) => {
-      this.apiService.error(err);
-    });
-  }
-
   
   openSnackBar(code,message) {
     this._snackBar.open(code, message, {
@@ -86,6 +73,23 @@ export class CategoryComponent {
       }
       else{
         this.openSnackBar(res.code,'An error has occured'); 
+      }
+    })
+    .catch((err) => {
+      this.apiService.error(err);
+    });
+  }
+
+  deleteCategory(id){
+    this.apiService
+    .DeleteCategory(id)
+    .then((res) => {
+      if(res.code === 200){
+        this.openSnackBar(res.code,res.message)
+        this.getCategories();
+      }
+      else{
+        this.openSnackBar(res.code,res.message)
       }
     })
     .catch((err) => {

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 import { FormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon'
 import { HttpClientModule } from '@angular/common/http';
@@ -22,40 +21,27 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatListModule} from '@angular/material/list';
+
+
 
 
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomepageComponent } from './homepage/homepage.component';
-import { StaffComponent } from './staff/staff.component';
-import { ProductComponent } from './product/product.component';
+import { ZoneComponent } from './zone/zone.component';
 import { CategoryComponent } from './category/category.component';
-import { TransactionComponent } from './transaction/transaction.component';
-import { TransactionDetailComponent } from './transaction-detail/transaction-detail.component';
-import { CustomerComponent } from './customer/customer.component';
-import { CustomerProductComponent } from './customer-product/customer-product.component';
-import { CartComponent } from './cart/cart.component';
-import { CustomerProfileComponent } from './customer-profile/customer-profile.component';
-import { RegisterComponent } from './register/register.component';
-import { CustomerLoginComponent } from './customer-login/customer-login.component';
+import { DrawzoneComponent } from './drawzone/drawzone.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    HomepageComponent,
-    StaffComponent,
-    ProductComponent,
+    ZoneComponent,
     CategoryComponent,
-    TransactionComponent,
-    TransactionDetailComponent,
-    CustomerComponent,
-    CustomerProductComponent,
-    CartComponent,
-    CustomerProfileComponent,
-    RegisterComponent,
-    CustomerLoginComponent
+    DrawzoneComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,6 +60,9 @@ import { CustomerLoginComponent } from './customer-login/customer-login.componen
     FlexLayoutModule,
     MatInputModule,
     MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
     MatProgressSpinnerModule,
     DragDropModule,
     MatButtonToggleModule,
