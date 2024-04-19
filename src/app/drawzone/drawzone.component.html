@@ -31,7 +31,7 @@
                 [style.height.px]="floor.height" [style.width.px]="floor.width" style="opacity: 0.6">
               <div *ngFor="let item of objects" id="{{item.object_id}}" class="example-box" (click)="focus(item)" (dblclick)="openEdit(item)"
                 [style.background]="checkColor(item)" [style.border]="checkBorder(item.object_id)"
-                (cdkDragStarted)="focus(item.object_id)" (cdkDragEnded)="changeXY($event,item)"
+                (cdkDragStarted)="focus(item)" (cdkDragEnded)="changeXY($event,item)"
                 (cdkDragStarted)="startDrag($event)" [style.width.px]="item.width" [style.height.px]="item.height"
                 cdkDragBoundary=".example-boundary" cdkDrag [cdkDragFreeDragPosition]="item.dragPosition"
                 [style.transform]="checkRotate(item.rotate)">
@@ -131,15 +131,14 @@
         <!-- [style.width.%]="95" [style.height.px]="800" -->
   
     <div id="container" class="example-boundary" [style.width.px]="floor.width" [style.height.px]="floor.height"
-              (mousedown)="mouseDown()" (mousemove)="mouseMove($event)" (mouseup)="mouseUp()" (mouseout)="mouseUp()" >
-            
+              (mousedown)="mouseDown()" (mousemove)="mouseMove($event)" (mouseup)="mouseUp()" (mouseout)="mouseUp()" >      
               <div class="grid" [style.height.px]="floor.height" [style.width.px]="floor.width">
                 <canvas #test style="position: absolute;opacity: 0.2;"></canvas>
                 <img *ngIf="checkBG(ZoneInfo.bg_url)" [src]="ZoneInfo.bg_url" onError="this.src=''" onmousedown="return false"
                   [style.height.px]="floor.height" [style.width.px]="floor.width" style="opacity: 0.6">
                 <div *ngFor="let item of objects" id="{{item.object_id}}" class="example-box" (click)="focus(item)" (dblclick)="openEdit(item)"
                   [style.background]="checkColor(item)" [style.border]="checkBorder(item.object_id)"
-                  (cdkDragStarted)="focus(item.object_id)" (cdkDragEnded)="changeXY($event,item)"
+                  (cdkDragStarted)="focus(item)" (cdkDragEnded)="changeXY($event,item)"
                   (cdkDragStarted)="startDrag($event)" [style.width.px]="item.width" [style.height.px]="item.height"
                   cdkDragBoundary=".example-boundary" cdkDrag [cdkDragFreeDragPosition]="item.dragPosition"
                   [style.transform]="checkRotate(item.rotate)">
@@ -172,12 +171,46 @@
         <mat-card-content style ='padding:10px; width: 350px;'>
           <form>
             <table>
-              <tr>
-                  <td width ="30%" >Name</td>
+              <tr *ngIf=" createMode ==true || editingObject.type != 1">
+                <td width ="30%" >Category</td>
+                <td width ="70%">
+                    <!-- <select [(value)]="currentRow.category">
+                      @for (state of enum; track state) {
+                        <option [value]="state.id">{{state.name}}</option>
+                      }
+                    </select> -->
+                    <mat-card-content>
+                      <mat-form-field>
+                        <mat-select [(value)]="currentRow.category">
+                          @for (state of enum; track state) {
+                            <mat-option [value]="state.id">{{state.name}}</mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </mat-card-content>
+                </td>
+                </tr>
+              <tr *ngIf=" currentRow.category != 0">
+                  <td width ="30%"  >Name</td>
                   <td width ="70%">
                     <input type="text" name="name"[(ngModel)]="currentRow.name">
                   </td>
                   </tr>
+
+                  <tr *ngIf=" currentRow.category == 0">
+                    <td width ="30%" >Name</td>
+                    <td width ="70%">
+                      <mat-card-content>
+                        <mat-form-field>
+                          <mat-select [(value)]="currentRow.zoneId">
+                            @for (state of zoneEnum; track state) {
+                              <mat-option [value]="state.id">{{state.name}}</mat-option>
+                            }
+                          </mat-select>
+                        </mat-form-field>
+                      </mat-card-content>
+                    </td>
+                    </tr>
                
                
               <tr>
@@ -192,26 +225,6 @@
                         <input  type="number" name="height"[(ngModel)]="currentRow.height">
                       </td>
                       </tr>
-
-                      <tr *ngIf=" createMode ==true || editingObject.type != 1">
-                        <td width ="30%" >Category</td>
-                        <td width ="70%">
-                            <!-- <select [(value)]="currentRow.category">
-                              @for (state of enum; track state) {
-                                <option [value]="state.id">{{state.name}}</option>
-                              }
-                            </select> -->
-                            <mat-card-content>
-                              <mat-form-field>
-                                <mat-select [(value)]="currentRow.category">
-                                  @for (state of enum; track state) {
-                                    <mat-option [value]="state.id">{{state.name}}</mat-option>
-                                  }
-                                </mat-select>
-                              </mat-form-field>
-                            </mat-card-content>
-                        </td>
-                        </tr>
 
                       <tr>
                         <td width ="30%" >Color</td>

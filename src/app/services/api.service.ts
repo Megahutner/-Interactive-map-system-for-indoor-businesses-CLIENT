@@ -216,6 +216,10 @@ export class ApiService {
     return this.Get("zone/get");
   }
 
+  GetZoneEnum(id){
+    return this.Get(`zone/enum?id=${id}`);
+   }
+
   DeleteZone(id) {
     return this.Delete(`zone/delete?id=${id}`);
   }
