@@ -34,8 +34,6 @@ export class DrawzoneComponent implements OnInit, DoCheck{
   loading: boolean = true;
   @HostListener('window:beforeunload', ['$event'])
 canLeavePage($event) {
-  console.log($event);
-  console.log(this.change);
   if(this.change) {
     confirm('You data is unsaved. Are you sure you want to leave?')
     return false;
@@ -282,7 +280,7 @@ value = 'Clear me';
 oldOption : boolean = false;
 focusedRowKey = -1;
 option: boolean = true;
-objectColumns: string[] = [ 'Name','Category','Width','Height','Coordinates',"Edit","Close"];
+objectColumns: string[] = [ 'Name','Category','Width','Height','Coordinates',"Edit","To","Close"];
 createMode: boolean = false;
 editMode: boolean = false;
 shapedimension = 10;
@@ -825,7 +823,7 @@ changeXY(e:CdkDragEnd,item:any){ // cdkDragEnded event
       object.dragPosition.y = y;
       object.distance.x += e.distance.x ;
       object.distance.y += e.distance.y ;
-      console.log(e.source.getFreeDragPosition()); // sometime this gives decimal number, so it needs to be round 
+      //console.log(e.source.getFreeDragPosition()); // sometime this gives decimal number, so it needs to be round 
       var objectFreePositionX = Math.round(e.source.getFreeDragPosition().x) 
       var objectFreePositionY = Math.round(e.source.getFreeDragPosition().y) 
       if(object.distance.x < 0){ // left boundary
@@ -1287,7 +1285,6 @@ openEdit(object){
   this.createMode = false;
   this.editMode = true;
   this.editingObject = object;
-  console.log(object);
   this.currentRow.name = object.name;
   this.currentRow.width = object.width;
   this.currentRow.height = object.height;
@@ -1549,14 +1546,16 @@ public getCategoryName(id){
 public getZoneName(id){
   if(id != 0){
     if(this.zoneEnum.length > 0){
-      return this.zoneEnum.find(x=>x.id === id).name;
-    }
-    else {
-      return "Undefined";
+      if(this.zoneEnum.find(x=>x.id === id) != null){
+        return this.zoneEnum.find(x=>x.id === id).name;
+      }
+      else {
+        return "Undefined";
+      }
     }
   }
-  else{
-    return "Terminal";
+  else {
+    return "Undefined";
   }
 }
 // End of Category functionalities
@@ -1577,7 +1576,7 @@ exportData(): void {
   exportObject.forEach((x)=>{
     data.push({name: `${x.name}`,
      width: `${x.width}`,height: `${x.height}`,
-     x: `${x.dragPosition.x}`,y: `${x.dragPosition.y}`,rotate: `${x.rotate}`, color:`${x.color? x.color : '#c2b8b8'}`, category:`${x.category}`});
+     x: `${x.dragPosition.x}`,y: `${x.dragPosition.y}`,rotate: `${x.rotate}`, color:`${x.color? x.color : '#c2b8b8'}`, category:`${x.category}`, zoneId:`${x.zoneId}`});
   })
   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
   const wb: XLSX.WorkBook = XLSX.utils.book_new();
@@ -1612,9 +1611,10 @@ for (let index = 0; index < data.length; index++) {
   var object = {id: 0,  object_id: this.randomString(),
     name: data[index].name,width: Number(data[index].width),height: Number(data[index].height),
     type: 2,dragPosition:{x:Number(data[index].x),y:Number(data[index].y)},distance:{x:Number(data[index].x),y:Number(data[index].y)},
-    rotate:Number(data[index].rotate), color:data[index].color,category: Number(data[index].category), zoneId: data[index].zoneId};
+    rotate:Number(data[index].rotate), color:data[index].color,category: Number(data[index].category), zoneId: Number(data[index].zoneId)};
   this.objects.push(object);
 }
+console.log(this.objects)
 }
 
 openSnackBar(code,message) {
@@ -1915,6 +1915,10 @@ rotate(item){   // change current highlighted block 's rotate value
         let cy = e.clientY - containerY;
         //this.draw_erase_walls(e, cx, cy);
       }
+    }
+
+    ToDrawZone(id) {
+      window.open(`/zone/draw?id=${id}`, "_blank");
     }
     
     async draw_erase_walls(e, cx, cy) { // WIP

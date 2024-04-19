@@ -36,7 +36,6 @@ export class ZoneComponent {
   public getZones(){
     this.apiService.GetZones()
     .then((res) => {
-      console.log(res);
       this.zones = res?.data.zone;
     })
     .catch((err) => {
@@ -90,13 +89,9 @@ export class ZoneComponent {
       // if(this.uploadHinh != null){
       //   this.product.image = '';
       //   let upload = new FormData();
-      //   console.log(this.uploadHinh)
       //   upload.append('image', this.uploadHinh, this.uploadHinh.Name);
-      //   console.log(upload);
       //   this.apiService.UploadFile(upload).then((res)=> {
       //     this.product.image= res.data;
-      //     console.log(this.product.image);
-      //     console.log(res.data);
       //     this.apiService.CreateProduct(this.product)
       // .then((res) => {
       //   if(res.code === 200){

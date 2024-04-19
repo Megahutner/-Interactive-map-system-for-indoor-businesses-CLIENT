@@ -34,7 +34,6 @@ export class CategoryComponent {
   public getCategories(){
     this.apiService.GetCategories()
     .then((res) => {
-      console.log(res);
       this.categories = res?.data.category;
     })
     .catch((err) => {
