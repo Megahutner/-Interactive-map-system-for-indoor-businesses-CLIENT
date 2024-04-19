@@ -42,7 +42,7 @@
                     [style.width.px]="item.width" src="./assets/picture/object.png">
                   <div
                     style="font-size:75%;position: absolute;top: 50%;left: 50%;color:black;transform: translate(-50%, -50%);">
-                    {{item.name}}</div>
+                    {{item.category != 0 ? item.name : getZoneName(item.zoneId) }}</div>
                 </div>
               </div>
             </div>
@@ -75,7 +75,7 @@
            -->
             <ng-container matColumnDef="Name">
               <th mat-header-cell *matHeaderCellDef> Name </th>
-              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              <td mat-cell *matCellDef="let element"> {{element.category != 0 ? element.name : getZoneName(element.zoneId)}} </td>
             </ng-container>
 
             <ng-container matColumnDef="Category">

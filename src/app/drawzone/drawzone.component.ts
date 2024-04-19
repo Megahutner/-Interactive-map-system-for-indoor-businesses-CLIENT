@@ -77,10 +77,10 @@ canLeavePage($event) {
                       this.objects.splice(i,1)
                       this.objects.splice(i,0,{id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
                         type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x-1,y:this.tempObject.distance.y},distance:{x:this.tempObject.distance.x-1,y:this.tempObject.distance.y},
-                        rotate:this.tempObject.rotate, color: this.tempObject.color,  category: this.tempObject.category});
+                        rotate:this.tempObject.rotate, color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId});
                 this.backArray.push({id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
                   type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},distance:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},
-                  rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category})     
+                  rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId})     
                   this.table.renderRows()    
                     break;
                   }
@@ -108,11 +108,11 @@ canLeavePage($event) {
                       this.objects.splice(i,1)
                       this.objects.splice(i,0,{id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
                         type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x,y:this.tempObject.distance.y-1},distance:{x:this.tempObject.distance.x,y:this.tempObject.distance.y-1},
-                        rotate:this.tempObject.rotate,color: this.tempObject.color ,  category: this.tempObject.category
+                        rotate:this.tempObject.rotate,color: this.tempObject.color ,  category: this.tempObject.category, zoneId: this.tempObject.zoneId
                       }) 
                         this.backArray.push({id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
                           type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},distance:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},
-                          rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category})
+                          rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId})
                           this.table.renderRows()
                     break;
                   }
@@ -141,10 +141,10 @@ canLeavePage($event) {
                     this.objects.splice(i,1)
                     this.objects.splice(i,0,{id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
                       type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x+1,y:this.tempObject.distance.y},distance:{x:this.tempObject.distance.x+1,y:this.tempObject.distance.y},
-                      rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category}) 
+                      rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId}) 
                       this.backArray.push({id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
                         type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},distance:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},
-                        rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category})
+                        rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId})
                         this.table.renderRows()
                   break;
                 }}
@@ -172,10 +172,10 @@ canLeavePage($event) {
                       this.objects.splice(i,1)
                       this.objects.splice(i,0,{id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
                         type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x,y:this.tempObject.distance.y+1},distance:{x:this.tempObject.distance.x,y:this.tempObject.distance.y+1},
-                        rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category                      }) 
+                        rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId}) 
                         this.backArray.push({id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
                           type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},distance:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},
-                          rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category})
+                          rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId})
                           this.table.renderRows()
                     break;
                   }
@@ -239,7 +239,8 @@ objects = [
   distance:{x:0,y:0},
   rotate:0,
   color: null ,
-  category: 0
+  category: 0,
+  zoneId: 0,
 },
 { 
   id:1,
@@ -252,7 +253,8 @@ objects = [
   distance:{x:500, y:200},
   rotate:0,
   color: null  ,
-  category: 0
+  category: 0,
+   zoneId: 0
 },
 { 
   id:2,
@@ -265,7 +267,8 @@ objects = [
   distance:{x:800, y:0},
   rotate:0,
   color: null ,
-  category: 0
+  category: 0,
+  zoneId: 0
 },
 ]
 change: boolean = false
@@ -791,7 +794,7 @@ changeXY(e:CdkDragEnd,item:any){ // cdkDragEnded event
           width: this.tempObject.width,height: this.tempObject.height,
           type: this.tempObject.type,
           dragPosition:{x:x,y:y},distance:{x:x,y:y},
-          rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category})
+          rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId})
           this.table.renderRows();
         //  this.backArray.push({id: this.tempObject.id,name: this.tempObject.name,
         //   width: this.tempObject.width,height: this.tempObject.height,
@@ -817,7 +820,7 @@ changeXY(e:CdkDragEnd,item:any){ // cdkDragEnded event
           width: object.width,height: object.height,
           type: object.type,
           dragPosition:{x:object.dragPosition.x,y:object.dragPosition.y},distance:{x:object.distance.x,y:object.distance.y},
-          rotate:object.rotate,color: object.color,  category: object.category })
+          rotate:object.rotate,color: object.color,  category: object.category, zoneId: object.zoneId })
       object.dragPosition.x = x;
       object.dragPosition.y = y;
       object.distance.x += e.distance.x ;
@@ -1254,9 +1257,9 @@ getZoneDetails(id){
         this.objects =[];
         kioskinfos.forEach(kiosk =>{
           this.objects.push({id:kiosk.id,  object_id: kiosk.terminal_id,
-  name:kiosk.name,width:kiosk.width,height:kiosk.height,type:1,dragPosition:{x:kiosk.lat,y:kiosk.lng},distance:{x:kiosk.lat,y:kiosk.lng},rotate:kiosk.front, color:kiosk.color,  category: 0});})
+  name:kiosk.name,width:kiosk.width,height:kiosk.height,type:1,dragPosition:{x:kiosk.lat,y:kiosk.lng},distance:{x:kiosk.lat,y:kiosk.lng},rotate:kiosk.front, color:kiosk.color,  category: -1, zoneId: 0});})
         blocks.forEach(block =>{  
-        this.objects.push({id:block.id,object_id:block.block_id,name:block.name,width:block.width,height:block.height,type:2,dragPosition:{x:block.lat,y:block.lng},distance:{x:block.lat,y:block.lng},rotate:block.front, color:block.color,  category: block.category});
+        this.objects.push({id:block.id,object_id:block.block_id,name:block.name,width:block.width,height:block.height,type:2,dragPosition:{x:block.lat,y:block.lng},distance:{x:block.lat,y:block.lng},rotate:block.front, color:block.color,  category: block.category, zoneId: block.zoneId});
       })
       }
       this.drawGrid();
@@ -1275,7 +1278,7 @@ openCreate(){
   this.currentRow.height = 100;
   this.currentRow.color = null;
   this.currentRow.category = this.enum[0].id; // need more logic for this
-  //this.currentRow.zoneId = 0;
+  this.currentRow.zoneId = 0;
   this.dialog.open(this.form);
 }
 
@@ -1284,19 +1287,17 @@ openEdit(object){
   this.createMode = false;
   this.editMode = true;
   this.editingObject = object;
+  console.log(object);
   this.currentRow.name = object.name;
   this.currentRow.width = object.width;
   this.currentRow.height = object.height;
   this.currentRow.color = object.color;
   this.currentRow.category = object.category;
+  this.currentRow.zoneId = object.zoneId;
   this.dialog.open(this.form);
 }
 
 createOrEdit(){
-  if(this.currentRow.name === '' || this.currentRow.name === null || this.currentRow.name === undefined){
-    this.openSnackBar(422,'Name is required');
-    return;
-  }
   if(this.currentRow.width === 0 || this.currentRow.width === null || this.currentRow.width === undefined){
     this.openSnackBar(422,'Width is required');
     return;
@@ -1307,9 +1308,25 @@ createOrEdit(){
   }
   if(this.createMode){
     //
-    if(this.currentRow.category === 0 || this.currentRow.category === null || this.currentRow.category === undefined){
-      this.openSnackBar(422,'Category is required');
+    // if(this.currentRow.category === 0 || this.currentRow.category === null || this.currentRow.category === undefined){
+    //   this.openSnackBar(422,'Category is required');
+    //   return;
+    // }
+    if(this.currentRow.category === 0 && this.currentRow.zoneId === 0){
+      this.openSnackBar(422,'Name is required');
       return;
+    }
+    else if(this.currentRow.category !=0){
+      if(this.currentRow.name === '' || this.currentRow.name === null || this.currentRow.name === undefined){
+        this.openSnackBar(422,'Name is required');
+        return;
+      }
+      else{
+        this.currentRow.zoneId = 0;
+      }
+    }
+    else{
+      this.currentRow.name = "";
     }
     for(var i=0;i<this.objects?.length;i++){
       if(this.objects[i].name === this.currentRow.name){
@@ -1330,7 +1347,7 @@ createOrEdit(){
       // }  
       this.objects.push({id: 0,object_id:this.randomString(),name: this.currentRow.name,width: this.currentRow.width,height: this.currentRow.height,
       type:2,dragPosition:{x:0,y:0},distance:{x:0,y:0},
-      rotate:0,color: this.currentRow.color,  category: this.currentRow.category}) ;
+      rotate:0,color: this.currentRow.color,  category: this.currentRow.category, zoneId: this.currentRow.zoneId}) ;
     if(this.option){
       this.table.renderRows();
     }
@@ -1338,9 +1355,25 @@ createOrEdit(){
   }
   else{
     if(this.editingObject.type == 2){
-      if(this.currentRow.category === 0 || this.currentRow.category === null || this.currentRow.category === undefined){
-        this.openSnackBar(422,'Category is required');
+      // if(this.currentRow.category === 0 || this.currentRow.category === null || this.currentRow.category === undefined){
+      //   this.openSnackBar(422,'Category is required');
+      //   return;
+      // }
+      if(this.currentRow.category === 0 && this.currentRow.zoneId === 0){
+        this.openSnackBar(422,'Name is required');
         return;
+      }
+      else if(this.currentRow.category !=0){
+        if(this.currentRow.name === '' || this.currentRow.name === null || this.currentRow.name === undefined){
+          this.openSnackBar(422,'Name is required');
+          return;
+        }
+        else{
+          this.currentRow.zoneId = 0;
+        }
+      }
+      else{
+        this.currentRow.name = "";
       }
     }
     for(var i=0;i<this.objects.length;i++){
@@ -1351,12 +1384,14 @@ createOrEdit(){
       }  
       this.backArray.push({id: this.editingObject.id,object_id: this.editingObject.object_id,name: this.editingObject.name,width: this.editingObject.width,height: this.editingObject.height,
         type: this.editingObject.type,dragPosition:{x:this.editingObject.distance.x,y:this.editingObject.distance.y},distance:{x:this.editingObject.distance.x,y:this.editingObject.distance.y},
-        rotate:this.editingObject.rotate,color: this.editingObject.color, category: this.editingObject.category});
+        rotate:this.editingObject.rotate,color: this.editingObject.color, category: this.editingObject.category,zoneId: this.editingObject.zoneId});
     this.editingObject.name = this.currentRow.name;
     this.editingObject.width = this.currentRow.width;
     this.editingObject.height = this.currentRow.height;
     this.editingObject.color = this.currentRow.color;
     this.editingObject.category = this.currentRow.category;
+    this.editingObject.zoneId = this.currentRow.zoneId;
+
     if(this.option){
       this.table.renderRows();
     }
@@ -1369,7 +1404,7 @@ deleteObject(object){
     if(this.objects[i].object_id == object.object_id){
       this.backArray.push({id: object.id,object_id: object.object_id,name: object.name,width: object.width,height: object.height,
         type: object.type,dragPosition:{x:object.distance.x,y:object.distance.y},distance:{x:object.distance.x,y:object.distance.y},
-        rotate:object.rotate,color: object.color,category: object.category});
+        rotate:object.rotate,color: object.color,category: object.category,zoneId: object.zoneId});
       this.objects.splice(i,1);
       this.table.renderRows();
     }
@@ -1394,7 +1429,8 @@ updateToServer(){ // update positions of the objects in the zone to server
       Width: object.width,
       Height: object.height,
       Color: object.color,
-      CategoryId: object.category
+      CategoryId: object.category,
+      ZoneLinkId: object.zoneId
     })
   })
   this.apiService.UpdateDrawZone(updateZone).then(res =>{
@@ -1497,9 +1533,23 @@ public getEnumCategories(){
 }
 
 public getCategoryName(id){
-  if(id != 0){
+  if(id >= 0){
     if(this.enum.length > 0){
       return this.enum.find(x=>x.id === id).name;
+    }
+  }
+  else if(id == -1){
+    return "Terminal";
+  }
+  else{
+    return "Undefined";
+  }
+}
+
+public getZoneName(id){
+  if(id != 0){
+    if(this.zoneEnum.length > 0){
+      return this.zoneEnum.find(x=>x.id === id).name;
     }
     else {
       return "Undefined";
@@ -1562,7 +1612,7 @@ for (let index = 0; index < data.length; index++) {
   var object = {id: 0,  object_id: this.randomString(),
     name: data[index].name,width: Number(data[index].width),height: Number(data[index].height),
     type: 2,dragPosition:{x:Number(data[index].x),y:Number(data[index].y)},distance:{x:Number(data[index].x),y:Number(data[index].y)},
-    rotate:Number(data[index].rotate), color:data[index].color,category: Number(data[index].category)};
+    rotate:Number(data[index].rotate), color:data[index].color,category: Number(data[index].category), zoneId: data[index].zoneId};
   this.objects.push(object);
 }
 }
@@ -1774,10 +1824,10 @@ rotate(item){   // change current highlighted block 's rotate value
         name: this.tempObject.name, width: this.tempObject.width,height: this.tempObject.height,type: this.tempObject.type,
         dragPosition:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},
         distance:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},
-        rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category}); 
+        rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category,zoneId: this.tempObject.zoneId}); 
       this.backArray.push({id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
         type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},distance:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},
-        rotate:this.tempObject.rotate-90,color: this.tempObject.color,  category: this.tempObject.category})
+        rotate:this.tempObject.rotate-90,color: this.tempObject.color,  category: this.tempObject.category,zoneId: this.tempObject.zoneId})
     }
   }
   if(this.change == false ){
