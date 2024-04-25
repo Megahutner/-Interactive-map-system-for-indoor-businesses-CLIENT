@@ -12,3 +12,4 @@ Step 4: Run this command line in your IDE to start the client:
 ng serve
 
 Preferred IDE: Visual Studio Code
+# Note: Need server from https://github.com/Megahutner/UWE-Server
