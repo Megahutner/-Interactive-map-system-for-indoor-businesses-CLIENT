@@ -25,7 +25,6 @@
     <div style="border: 1px solid grey;position:relative;overflow:auto;height: 800px;width:100%">
   <div id="container" class="example-boundary" [style.width.px]="floor.width" [style.height.px]="floor.height"
             (mousedown)="mouseDown()" (mousemove)="mouseMove($event)" (mouseup)="mouseUp()" (mouseout)="mouseUp()" > 
-            <div class="grid" [style.height.px]="floor.height" [style.width.px]="floor.width">
               <canvas #test style="position: absolute; opacity: 0.2;"></canvas>
               <img *ngIf="checkBG(ZoneInfo.bg_url)" [src]="ZoneInfo.bg_url" onError="this.src=''" onmousedown="return false"
                 [style.height.px]="floor.height" [style.width.px]="floor.width" style="opacity: 0.6">
@@ -36,8 +35,6 @@
                 cdkDragBoundary=".example-boundary" cdkDrag [cdkDragFreeDragPosition]="item.dragPosition"
                 [style.transform]="checkRotate(item.rotate)">
                 <div class=icon>
-                  <!-- <img id="{{item.id+'icon'}}" *ngIf="item.type==1" [style.height.px]="item.height"
-                    [style.width.px]="item.width" style="margin-top: 5px;" src="./assets/picture/object.png"> -->
                   <img id="{{item.id+'icon'}}"  [style.height.px]="item.height"
                     [style.width.px]="item.width" src="./assets/picture/object.png">
                   <div
@@ -45,7 +42,6 @@
                     {{item.category != 0 ? item.name : getZoneName(item.zoneId) }}</div>
                 </div>
               </div>
-            </div>
           </div>
         </div>
         <div class ='backButton2'>

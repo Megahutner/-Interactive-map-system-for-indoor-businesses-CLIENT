@@ -9,6 +9,8 @@ import * as XLSX from 'xlsx';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../services/api.service';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
+import now from 'performance-now';
+
 
 
 
@@ -79,7 +81,9 @@ canLeavePage($event) {
                 this.backArray.push({id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
                   type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},distance:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},
                   rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId})     
-                  this.table.renderRows()    
+                  if(this.option){
+                    this.table.renderRows();
+                  }  
                     break;
                   }
                 }
@@ -111,7 +115,9 @@ canLeavePage($event) {
                         this.backArray.push({id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
                           type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},distance:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},
                           rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId})
-                          this.table.renderRows()
+                          if(this.option){
+                            this.table.renderRows();
+                          }
                     break;
                   }
                 }
@@ -143,7 +149,9 @@ canLeavePage($event) {
                       this.backArray.push({id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
                         type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},distance:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},
                         rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId})
-                        this.table.renderRows()
+                        if(this.option){
+                          this.table.renderRows();
+                        }
                   break;
                 }}
             case 83: { // down arrow (S) key
@@ -174,7 +182,9 @@ canLeavePage($event) {
                         this.backArray.push({id: this.tempObject.id,object_id: this.tempObject.object_id,name: this.tempObject.name,width: this.tempObject.width,height: this.tempObject.height,
                           type: this.tempObject.type,dragPosition:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},distance:{x:this.tempObject.distance.x,y:this.tempObject.distance.y},
                           rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId})
-                          this.table.renderRows()
+                          if(this.option){
+                            this.table.renderRows();
+                          }
                     break;
                   }
                   }
@@ -224,6 +234,7 @@ popupChangeBG : boolean = false;
 dataMedia: any;
 currentMediaType: any;
 currentmedia: any; 
+
 objects = [
 { 
   id:0,
@@ -402,7 +413,7 @@ zoneEnum: any = [];
             );
   }
 
-  checkInsideBoundary(currentObject,direction){ // check if blocks are overlapped or not
+  checkInsideBoundary(currentObject,direction){ // check if blocks are inside boundary
     var center = this.centerCoor(currentObject);
     var leftX = 0;
     var rightX = 0;
@@ -420,20 +431,20 @@ zoneEnum: any = [];
       topY = center.y - currentObject.width/2;
       bottomY = center.y + currentObject.width/2;
     }
-    if (direction === 1){ // check left move overlap
+    if (direction === 1){ // check left move boundary
 
       return !(
         leftX >= 1
       );}
-      if (direction ===2){ // check up move overlap
+      if (direction ===2){ // check up move boundary
         return !(
           topY >= 1
         );}
-        if (direction ===3){// check right move overlap
+        if (direction ===3){// check right move boundary
           return !(
           rightX <= this.width -1
           );}
-            return !(
+            return !( // check down move boundary
               bottomY <= this.height -1
             );
   }
@@ -793,7 +804,9 @@ changeXY(e:CdkDragEnd,item:any){ // cdkDragEnded event
           type: this.tempObject.type,
           dragPosition:{x:x,y:y},distance:{x:x,y:y},
           rotate:this.tempObject.rotate,color: this.tempObject.color,  category: this.tempObject.category, zoneId: this.tempObject.zoneId})
-          this.table.renderRows();
+          if(this.option){
+            this.table.renderRows();
+          }
         //  this.backArray.push({id: this.tempObject.id,name: this.tempObject.name,
         //   width: this.tempObject.width,height: this.tempObject.height,
         //   type: this.tempObject.type,
@@ -823,7 +836,6 @@ changeXY(e:CdkDragEnd,item:any){ // cdkDragEnded event
       object.dragPosition.y = y;
       object.distance.x += e.distance.x ;
       object.distance.y += e.distance.y ;
-      //console.log(e.source.getFreeDragPosition()); // sometime this gives decimal number, so it needs to be round 
       var objectFreePositionX = Math.round(e.source.getFreeDragPosition().x) 
       var objectFreePositionY = Math.round(e.source.getFreeDragPosition().y) 
       if(object.distance.x < 0){ // left boundary
@@ -874,7 +886,9 @@ changeXY(e:CdkDragEnd,item:any){ // cdkDragEnded event
       //       // object.dragPosition.x= 0+object.height/2-object.width/2;
       //   }
       // }
-      this.table.renderRows();
+      if(this.option){
+        this.table.renderRows();
+      }
       }
     }
     number +=1;
@@ -967,26 +981,39 @@ changeXY(e:CdkDragEnd,item:any){ // cdkDragEnded event
     nextEnd = start;
     //openSet.push(start);
     while(Ends.length > 0){
+      var totalCells = 0;
+      //const { performance } = require('perf_hooks');
+      //var startT = performance.now();
+var startT = now()
       const beginLoop = Date.now();
        // temporary solution (follow throughout Ends list)
       for(let x  = 0; x < Ends.length; x++){
+        end = Ends[x];
+        // start.G = 0;
+        // start.H = this.heuristic(start,end)
+        // start.F = start.H;
       openSet.push(start);
-      end = Ends[x];
+
       while (openSet.length > 0) {
         let lowestIndex = 0;
         for (let i = 0; i < openSet.length; i++) {
           if (openSet[i].F < openSet[lowestIndex].F)
             lowestIndex = i;
+          else if (openSet[i].F === openSet[lowestIndex].F) {
+            if (openSet[i].H < openSet[lowestIndex].H) {
+              lowestIndex = i;
+            }
+          }
         }
         //current node
         let current = openSet[lowestIndex];
         //if reached the end
        // if (openSet[lowestIndex] === end ) {
         if(openSet[lowestIndex] == end){
-          const endLoop = Date.now();
-          console.log("Loop " + (endLoop - beginLoop) +"ms")
+ 
           // console.log("Open set - " + openSet.length);
           // console.log("Closed set - " + closedSet.length);
+          totalCells = openSet.length + closedSet.length;
           openSet = [];
           closedSet = [];
           //path = [];
@@ -1021,14 +1048,15 @@ changeXY(e:CdkDragEnd,item:any){ // cdkDragEnded event
                 newPath = true;
               }
             } else {
-              neighbor.G = tempG;
-              newPath = true;
-              openSet.push(neighbor);
+                neighbor.G = tempG;
+                newPath = true;
+                openSet.push(neighbor);      
             }  
             if (newPath) {
-              neighbor.H = this.heuristic(neighbor, end);
-              //neighbor.F = neighbor.G + neighbor.H;
-              neighbor.G = neighbor.F + neighbor.H;
+              neighbor.H = this.heuristic(neighbor,end)*0.1;
+              neighbor.F = neighbor.G + neighbor.H; // A*
+              // neighbor.H = 0
+              // neighbor.G = neighbor.F + neighbor.H; // dijkstra
               neighbor.cameFrom = current;
             }
           }
@@ -1041,6 +1069,10 @@ changeXY(e:CdkDragEnd,item:any){ // cdkDragEnded event
       path = [];
     }
       // perform draw function
+      const endLoop = Date.now();
+      //var endT = performance.now();
+      var endT = now()
+      console.log("Loop " + (endT - startT).toFixed(3) +"ms / "+ totalCells + " / " +optimizedPath.length )
       for (let k = optimizedPath.length - 1; k >= 0; k--) {
         this.drawNode(optimizedPath[k].x, optimizedPath[k].y)        
       }
@@ -1058,7 +1090,7 @@ changeXY(e:CdkDragEnd,item:any){ // cdkDragEnded event
     ctx.stroke();
     }
     const last = Date.now();
-    console.log(last-begin);
+    //console.log(last-begin);
   }
 
   async drawNode(xPos, yPos) { // draw red circle on a grid block 
@@ -1403,7 +1435,9 @@ deleteObject(object){
         type: object.type,dragPosition:{x:object.distance.x,y:object.distance.y},distance:{x:object.distance.x,y:object.distance.y},
         rotate:object.rotate,color: object.color,category: object.category,zoneId: object.zoneId});
       this.objects.splice(i,1);
-      this.table.renderRows();
+      if(this.option){
+        this.table.renderRows();
+      }
     }
 }
 }
@@ -1883,12 +1917,16 @@ rotate(item){   // change current highlighted block 's rotate value
           deleted = false;
           this.objects.splice(i,1);
           this.objects.splice(i,0,object);
-          this.table.renderRows();
+          if(this.option){
+            this.table.renderRows();
+          }
         }
     }
     if(deleted){
       this.objects.splice(this.objects.length,0,object);
-      this.table.renderRows();
+      if(this.option){
+        this.table.renderRows();
+      }
     }
     }
     
