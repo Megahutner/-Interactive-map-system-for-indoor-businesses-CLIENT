@@ -10,3 +10,5 @@ npm install –force
 
 Step 4: Run this command line in your IDE to start the client: 
 ng serve
+
+Preferred IDE: Visual Studio Code
