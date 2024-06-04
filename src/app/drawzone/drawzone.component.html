@@ -25,9 +25,9 @@
     <div style="border: 1px solid grey;position:relative;overflow:auto;height: 800px;width:100%">
   <div id="container" class="example-boundary" [style.width.px]="floor.width" [style.height.px]="floor.height"
             (mousedown)="mouseDown()" (mousemove)="mouseMove($event)" (mouseup)="mouseUp()" (mouseout)="mouseUp()" > 
-              <canvas #test style="position: absolute; opacity: 0.2;"></canvas>
+              <canvas #test style="position: absolute;opacity: 0.5;"></canvas>
               <img *ngIf="checkBG(ZoneInfo.bg_url)" [src]="ZoneInfo.bg_url" onError="this.src=''" onmousedown="return false"
-                [style.height.px]="floor.height" [style.width.px]="floor.width" style="opacity: 0.6">
+                [style.height.px]="floor.height" [style.width.px]="floor.width" >
               <div *ngFor="let item of objects" id="{{item.object_id}}" class="example-box" (click)="focus(item)" (dblclick)="openEdit(item)"
                 [style.background]="checkColor(item)" [style.border]="checkBorder(item.object_id)"
                 (cdkDragStarted)="focus(item)" (cdkDragEnded)="changeXY($event,item)"
@@ -135,31 +135,27 @@
       <div style="border: 1px solid grey;position:relative;overflow:auto; height: 800px;width:100%" > 
         <!-- [style.width.%]="95" [style.height.px]="800" -->
   
-    <div id="container" class="example-boundary" [style.width.px]="floor.width" [style.height.px]="floor.height"
-              (mousedown)="mouseDown()" (mousemove)="mouseMove($event)" (mouseup)="mouseUp()" (mouseout)="mouseUp()" >      
-              <div class="grid" [style.height.px]="floor.height" [style.width.px]="floor.width">
-                <canvas #test style="position: absolute;opacity: 0.2;"></canvas>
-                <img *ngIf="checkBG(ZoneInfo.bg_url)" [src]="ZoneInfo.bg_url" onError="this.src=''" onmousedown="return false"
-                  [style.height.px]="floor.height" [style.width.px]="floor.width" style="opacity: 0.6">
-                <div *ngFor="let item of objects" id="{{item.object_id}}" class="example-box" (click)="focus(item)" (dblclick)="openEdit(item)"
-                  [style.background]="checkColor(item)" [style.border]="checkBorder(item.object_id)"
-                  (cdkDragStarted)="focus(item)" (cdkDragEnded)="changeXY($event,item)"
-                  (cdkDragStarted)="startDrag($event)" [style.width.px]="item.width" [style.height.px]="item.height"
-                  cdkDragBoundary=".example-boundary" cdkDrag [cdkDragFreeDragPosition]="item.dragPosition"
-                  [style.transform]="checkRotate(item.rotate)">
-                  <div class=icon>
-                    <img id="{{item.id+'icon'}}" *ngIf="item.type==1" [style.height.px]="item.height"
-                      [style.width.px]="item.width" style="margin-top: 5px;" src="./assets/picture/object.png">
-                    <img id="{{item.id+'icon'}}" *ngIf="item.type==2" [style.height.px]="item.height"
-                      [style.width.px]="item.width" style="margin-top: 5px;" src="./assets/picture/object.png">
-                    <div
-                      style="font-size:75%;position: absolute;top: 50%;left: 50%;color:black;transform: translate(-50%, -50%);">
-                      {{item.name}}</div>
-                  </div>
-                </div>
-              </div>
+        <div id="container" class="example-boundary" [style.width.px]="floor.width" [style.height.px]="floor.height"
+        (mousedown)="mouseDown()" (mousemove)="mouseMove($event)" (mouseup)="mouseUp()" (mouseout)="mouseUp()" > 
+          <canvas #test style="position: absolute;opacity: 0.5;"></canvas>
+          <img *ngIf="checkBG(ZoneInfo.bg_url)" [src]="ZoneInfo.bg_url" onError="this.src=''" onmousedown="return false"
+            [style.height.px]="floor.height" [style.width.px]="floor.width" >
+          <div *ngFor="let item of objects" id="{{item.object_id}}" class="example-box" (click)="focus(item)" (dblclick)="openEdit(item)"
+            [style.background]="checkColor(item)" [style.border]="checkBorder(item.object_id)"
+            (cdkDragStarted)="focus(item)" (cdkDragEnded)="changeXY($event,item)"
+            (cdkDragStarted)="startDrag($event)" [style.width.px]="item.width" [style.height.px]="item.height"
+            cdkDragBoundary=".example-boundary" cdkDrag [cdkDragFreeDragPosition]="item.dragPosition"
+            [style.transform]="checkRotate(item.rotate)">
+            <div class=icon>
+              <img id="{{item.id+'icon'}}"  [style.height.px]="item.height"
+                [style.width.px]="item.width" src="./assets/picture/object.png">
+              <div
+                style="font-size:75%;position: absolute;top: 50%;left: 50%;color:black;transform: translate(-50%, -50%);">
+                {{item.category != 0 ? item.name : getZoneName(item.zoneId) }}</div>
             </div>
           </div>
+      </div>
+    </div>
           <div class ='backButton'>
             <button mat-fab color="primary" (click)="openCreate()"><mat-icon>library_add</mat-icon ></button> 
 
