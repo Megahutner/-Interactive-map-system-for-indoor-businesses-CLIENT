@@ -1,4 +1,4 @@
-# UWE Web Application
+# Web Application for the interactive map system for indoor businesses
 
 Step 1: Install NodeJS through https://nodejs.org/en/download
 
